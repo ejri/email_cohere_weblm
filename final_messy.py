@@ -1,10 +1,10 @@
 import re
 import os
-import openai
 from time import time,sleep
 from uuid import uuid4
 import smtplib
 from email.message import EmailMessage
+from datetime import datetime
 
 def open_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as infile:
@@ -15,6 +15,9 @@ def save_file(filepath, content):
     with open(filepath, 'w', encoding='utf-8') as outfile:
         outfile.write(content)
 
+def listToString(s):
+    str1 = " "   
+    return (str1.join(s))  
 
 openai.api_key = open_file('openaiapikey.txt')
 
@@ -50,9 +53,9 @@ def gpt3_completion(prompt, engine='text-davinci-002', temp=1.0, top_p=1.0, toke
 def email_alert(subject, body, to):
   msg= EmailMessage()
   user = "alerts.hackathon@gmail.com"
-  #account password: GoogleHackathon2021@gmail.com
+  #account password: -
   # Generated app password
-  password = "kedsgdrrahkhztyq"
+  password = "-"
   msg.set_content(body)
   msg['from']=user
   msg['to'] = to
@@ -68,19 +71,22 @@ def email_alert(subject, body, to):
 # classification_label= "wheelchair"
 
 if __name__ == '__main__':
+    date_time = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     scenario = open_file('input.txt')
     prompt = open_file('prompt_to_email.txt').replace('<<_TOPIC_>>', scenario)
     print('\n\n==========\n\n', prompt)
     completion = gpt3_completion(prompt)
     filename = scenario.replace(' ','').lower()[0:10] + str(time()) + '.txt'
-    output = scenario.strip() + '\n\nEMAIL:\n\n' + completion
+    output = scenario.strip() + '\n\nResponse:\n\n' + completion
     print('\n\n', completion)
-    save_file('assistant_email/%s' % filename, output)
+    save_file('sample_emails/%s' % filename, output)
     subject = []
     email= []
     recipient= []
     # phone_number= []
-    with open(filename, 'r') as f:
+    dir = 'sample_emails/'
+    response = dir + filename
+    with open(response, 'r') as f:
         lines = f.readlines()
         for line in lines:
             line = line.strip() # remove "\n" from line
@@ -92,7 +98,8 @@ if __name__ == '__main__':
                 recipient.append(line[10:])
             # if line.startswith("Phone:"):
             #     phone_number.append(line[6:])
+    subject= listToString(subject)
+    email= listToString(email)
+    recipient= listToString(recipient)
     email_alert(subject, email, recipient)
     # email_alert(subject, email, phone_number)
-
-
