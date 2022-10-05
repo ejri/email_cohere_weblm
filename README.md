@@ -5,17 +5,17 @@ To do list:
 
 1- create a prompt that takes in raw conversation input and converts it into 
 
-     -  better rephrased email with a neutral tone (especially useful when telling it to draft an email from incoherent thoughts) ✅ 
+* better rephrased email with a neutral tone (especially useful when telling it to draft an email from incoherent thoughts) ✅ 
      
-     - with subject line ✅ 
+* with subject line ✅ 
      
-     - email address of recipient ✅ 
+* *email address of recipient ✅ 
 
 2- create a function to send the email out. libraries used are (smtplib, email.message)
      
-    - send email ✅ 
+* send email ✅ 
      
-    - send text message ✅ 
+* send text message ✅ 
 
 3 - test if it's working as expected ✅ 
 
