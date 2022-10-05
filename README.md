@@ -9,7 +9,7 @@ To do list:
      
 * with subject line ✅ 
      
-* *email address of recipient ✅ 
+* email address of recipient ✅ 
 
 2- create a function to send the email out. libraries used are (smtplib, email.message)
      
